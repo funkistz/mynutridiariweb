@@ -1,0 +1,64 @@
+.table {
+    margin-top: 5px;
+}
+
+body,html {
+    padding: 0;
+    margin: 0;
+    /*font-family: "Francois One";*/
+    background: url('../images/bg.png');
+}
+
+#xwrapper {
+    border: 0px solid red;
+    height: 100%;
+    width: 980px;
+    margin: 0 auto;
+    /*position: relative;*/
+}
+
+#xheader-wrapper {
+}
+
+#xheader {
+    height: 122px;
+    background: url('../images/header.png') no-repeat;
+}
+
+#xmenu-wrapper {
+    height: 40px;
+    /*background: #1A6600;*/
+}
+
+#xmenu {
+    margin: 0 auto; 
+    position: relative;
+    /*border: 2px solid black;*/
+    height: 5px;
+}
+
+#xcontent-wrapper {
+    margin: 0 auto;
+    border: 0px solid #ddd;
+    background-color: white;
+    background-repeat: repeat-x;
+    box-shadow: 0px 0px 4px rgba(50, 50, 50, 1);
+    border-radius: 8px;
+}
+
+#xcontent {
+    min-height: 500px;
+    padding: 5px;
+    margin-top: 10px;
+    min-height: 550px;
+    padding: 10px;
+    margin-bottom: 2px;
+}
+
+#xfooter {
+    height: 0px;
+    width: 100%;
+    background: green;
+    /*position: absolute;
+    bottom: 0px;*/
+}

@@ -1,0 +1,111 @@
+body,html {
+    padding: 0;
+    margin: 0;
+    font-family: Francois One;
+    background: url('../images/bg.png');
+}
+
+#xwrapper {
+    border: 0px solid red;
+    position: relative;
+}
+
+#xheader-wrapper {
+    background:radial-gradient(ellipse at center, #ffd65e 0%,#febf04 100%);
+    width: 100%;
+    border-bottom: 40px solid #DF7D06;
+}
+
+#xheader {
+    height: 122px;
+    width: 980px;
+    margin: 0 auto;
+    border: 0px solid red;
+    background: url('../images/header.png') no-repeat;
+}
+
+#xmenu {
+    font-size: 12px;
+    position: relative;
+    top: -57px;
+    border: 0px solid red;
+    margin: 0 auto;
+    color: #000;
+    height: 32px;
+    width: 980px;
+    border-radius: 5px;
+    background-image: url('../images/menu-bg2.png');
+}
+
+#xmenu ul, #xmenu li {
+    margin: 0;
+    padding: 0;
+}
+
+#xmenu ul {
+    margin-top: 0px;
+    margin-left: 10px;
+    border: 0px solid red;
+}
+
+#xmenu li {
+    margin: 0;
+    height: 32px;
+    line-height: 30px;
+    list-style: none;
+    display: inline-block;
+    border: 0px solid yellow;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#xmenu li a {
+    color: #000;
+}
+
+#xmenu li.active {
+    background-image: url('../images/menu-bg3.png');
+    color: white;
+}
+
+#xmenu li.active a {
+    color: white;
+}
+
+#xmenu li.sep {
+    padding: 0;
+    margin: 0;
+    width: 2px;
+    background-image: url('../images/menu-bg4.png');
+}
+
+#xcontent-wrapper {
+    margin: 0 auto;
+    position: relative;
+    top: -57px;
+    width: 980px;
+    margin: 0 auto;
+    border: 1px solid #ddd;
+    background-image: url('../images/vertical.png');
+    background-color: white;
+    background-repeat: repeat-x;
+    box-shadow: 0px 0px 4px rgba(50, 50, 50, 1);
+    min-height: 550px;
+    padding: 10px;
+    margin-bottom: 2px;
+}
+
+#xcontent {
+    min-height: 550px;
+    padding: 0px;
+    padding-top: 0px;
+}
+
+#xfooter {
+    position: relative;
+    bottom: 0px;
+    height: 0px;
+    width: 980px;
+    background: black;
+    margin: 0 auto;
+}
