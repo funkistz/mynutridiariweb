@@ -12,7 +12,7 @@ $password1=$password;
 $regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/';
 
 if(preg_match($regex, $email))
-{ 
+{
 //$password=md5($password); // encrypted password
 $activation=md5($email.time()); // encrypted email+timestamp
 $count=mysqli_query($connection,"SELECT uid FROM users WHERE email='$email'");
@@ -28,14 +28,14 @@ $status_data = 'SUCCESS';
 }
 else
 {
-$msg= 'The email is already taken, please try new.'; 
+$msg= 'The email is already taken, please try new.';
 $status_data = 'EXIST';
 }
 
 }
 else
 {
-$msg = 'The email you have entered is invalid, please try again.'; 
+$msg = 'The email you have entered is invalid, please try again.';
 $status_data = 'INVALID';
 }
 
@@ -56,5 +56,3 @@ echo json_encode($return_object);
 //echo $msg;
 
 ?>
-
-

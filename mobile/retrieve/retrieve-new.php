@@ -4,9 +4,11 @@
 
 $dbhostname = 'localhost';
 $dbusername = 'root';
-$dbpassword = 'xxxxx';
+$dbpassword = '';
 
 $msg='';
+$email_status = 'error';
+
 if(!empty($_POST['email']) && isset($_POST['email']) )
 {
 // username  sent from form
@@ -18,10 +20,10 @@ $email = $_POST['email'];
 	$fullname ='';
 	$ucount = 0;
 
-	$dbhandle = mysql_connect($dbhostname, $dbusername, $dbpassword) 
+	$dbhandle = @mysql_connect($dbhostname, $dbusername, $dbpassword)
   		or die("Unable to connect to MySQL");
 
-	$selected = mysql_select_db("mynutridiariv2",$dbhandle)
+	$selected = @mysql_select_db("mynutridiariv2",$dbhandle)
   		or die("Could not select db");
 
 	//execute the SQL query and return records
@@ -62,46 +64,50 @@ Please click on the link below to activate your <strong>MyNutriDiari</strong> ac
 		//Send_Mail($to,$subject,$body);
 class mailer {
     function send_html($from, $to, $subject, $body, $attachment=array(), $mime_type=array()) {
-        require_once('Mail.php');
-        require_once('Mail/mime.php');
 
-        $crlf = "\n";
-        $mime = new Mail_mime($crlf);
-        $mime->setTXTBody('');
-        $mime->setHTMLBody($body);
+				require_once('../../protected/extensions/smtpmail/PHPMailer.php');
 
-        if (count($attachment) > 0) {
-            for ($i = 0; $i < count($attachment); $i++) {
-                $mime->addAttachment($attachment[$i], $mime_type[$i]);
-            }
-        }
+				$mail = new PHPMailer;
 
-        $body = $mime->get();
-        $headers = array ('From' => $from, 'To' => $to, 'Subject' => $subject);
-        $hdrs = $mime->headers($headers);
-        $smtp_params["host"]     = "10.17.237.55"; // SMTP host
-        $smtp_params["port"]     = "25";                 // SMTP Port (usually 25)
-        $smtp_params["auth"]     = false;
-        $smtp_params["username"] = "1GOVUC\mynutridiari.moh";
-        $smtp_params["password"] = "M@kanan.1234";
+				//Enable SMTP debugging.
+				// $mail->SMTPDebug = 3;
+				//Set PHPMailer to use SMTP.
+				$mail->isSMTP();
+				//Set SMTP host name
+				$mail->Host = "smtp.gmail.com";
+				//Set this to true if SMTP host requires authentication to send email
+				$mail->SMTPAuth = true;
+				//Provide username and password
+				$mail->Username = "mynutridiari@gmail.com";
+				$mail->Password = "M@kanan.1234";
+				//If SMTP requires TLS encryption then set it
+				$mail->SMTPSecure = "tls";
+				//Set TCP port to connect to
+				$mail->Port = 587;
 
-        // Sending the email using smtp
-        $mail =& Mail::factory("smtp", $smtp_params);
-        $mail->_params = '-f mynutridiari@moh.gov.my' ;
-        if ($mail->send($to, $hdrs, $body)) {
-        	$msg= "Retrieve successful. Please check email.";
-		$status_data = 'SUCCESS';
-        } else {
-        	$msg= "Sending email failed.";
-		$status_data = 'FAILED';
-        }
+				$mail->From = "mynutridiari@moh.gov.my";
+				$mail->FromName = "MyNutriDiari";
+
+				$mail->addAddress($to);
+
+				$mail->isHTML(true);
+
+				$mail->Subject = $subject;
+				$mail->Body = $body;
+
+				if(!$mail->send())
+				{
+						return 'error';
+				}
+				else
+				{
+						return 'success';
+				}
     }
 }
 
 		$mail = new mailer();
-		$mail->send_html('mynutridiari@moh.gov.my', $to, $subject, $body);
-
-
+		$email_status = $mail->send_html('mynutridiari@moh.gov.my', $to, $subject, $body);
 
 		$status_data = 'SUCCESS';
 
@@ -125,6 +131,7 @@ $items_array = array( "RETRIEVE_DATE" => $logindate,"RETRIEVE_TIME" => $logintim
 // return the JSON
 $return_object=array();
 $return_object["login"] = $items_array;
+$return_object["email_status"] = $email_status;
 echo json_encode($return_object);
 //echo $msg;
 

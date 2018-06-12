@@ -2,11 +2,11 @@
 $dbusername = 'root';
 $dbhostname = 'localhost';
 $dbname = 'mynutridiariv2';
-$dbpassword = 'xxxxx';
+$dbpassword = '';
 
 $dbhost = 'localhost';
 $dbuser = 'root';
-$dbpass = 'xxxxx';
+$dbpass = '';
 
 $msg='';
 
@@ -30,16 +30,16 @@ $updatedataint = (int)$updatedata;
 $dbusername = 'root';
 $dbhostname = 'localhost';
 $dbname = 'mynutridiariv2';
-$dbpassword = 'xxxxx';
+$dbpassword = '';
 
 
-$dbhandle = mysql_connect($dbhostname, $dbusername, $dbpassword) 
+$dbhandle = @mysql_connect($dbhostname, $dbusername, $dbpassword)
   		or die("Unable to connect to MySQL");
 
-$selected = mysql_select_db($dbname,$dbhandle) 
+$selected = mysql_select_db($dbname,$dbhandle)
   		or die("Could not select db");
-  		
-$temp = "SELECT * FROM userdata WHERE username = '".$username."'";  		
+
+$temp = "SELECT * FROM userdata WHERE username = '".$username."'";
 $result = mysql_query($temp, $dbhandle);
 $num_rows = mysql_num_rows($result);
 
@@ -72,22 +72,22 @@ if (($activitylevel!="")&&($activitylevel!=null)) {
 	$sql .= "',activitylevel = '".$activitylevel;
 	$test = 1;
 }
-		
+
 if (($program!="")&&($program!=null)) {
 	$sql .= "',program = '".$program;
 	$test = 1;
-}		
-		
+}
+
 if (($needcalorie!="")&&($needcalorie!=null)) {
 	$sql .= "',needcalorie = '".$needcalorie;
 	$test = 1;
-}		
+}
 
 if (($bmi!="")&&($bmi!=null)) {
 	$sql .= "',bmi = '".$bmi;
 	$test = 1;
-}		
-		
+}
+
 $sql .=	"' WHERE username = '".$username."'";
 
 //echo $sql;
@@ -106,7 +106,7 @@ $status_data = 'SYNC';
 if ($test == 1) {
 	mysql_select_db($dbname);
 	$retval = mysql_query( $sql, $dbhandle );
-	if(! $retval )	
+	if(! $retval )
 	{
   		die('Could not update data: ' . mysql_error());
 	}
@@ -117,15 +117,15 @@ mysql_close($dbhandle);
 $dbusername = 'root';
 $dbhostname = 'localhost';
 $dbname = 'mynutridiariv2';
-$dbpassword = 'xxxxx';
+$dbpassword = '';
 
 
-$dbhandle = mysql_connect($dbhostname, $dbusername, $dbpassword) 
+$dbhandle = @mysql_connect($dbhostname, $dbusername, $dbpassword)
   		or die("Unable to connect to MySQL");
 
-$selected = mysql_select_db($dbname,$dbhandle) 
+$selected = mysql_select_db($dbname,$dbhandle)
   		or die("Could not select db");
-  		
+
 
 //execute the SQL query and return records
 $result = mysql_query("SELECT * from userdata where username = '".$username."'");
@@ -145,7 +145,7 @@ $ucount = 0;
 
 		//fetch the data from the database
 		while ($row = mysql_fetch_array($result)) {
-	
+
 		$user_id[$ucount] = $row['id'];
 		$user_dob[$ucount] = $row['dob'];
 		$user_gender[$ucount] = $row['gender'];
@@ -155,12 +155,12 @@ $ucount = 0;
 		$user_activitylevel[$ucount] = $row['activitylevel'];
 		$user_program[$ucount] = $row['program'];
 		$user_needcalorie[$ucount] = $row['needcalorie'];
-	
+
 		$ucount++;
 		}
 
 	}
-    
+
 	if ($ucount>0) {
 		$status_data = 'SYNC';
 	} else {

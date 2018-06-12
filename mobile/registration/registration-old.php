@@ -1,4 +1,4 @@
-?php  header('Content-type: application/json');
+<?php  header('Content-type: application/json');
 include 'db.php';
 $msg='';
 if(!empty($_POST['email']) && isset($_POST['email']) &&  !empty($_POST['password']) &&  isset($_POST['password']) )
@@ -12,7 +12,7 @@ $password1=$password;
 $regex = '/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/';
 
 if(preg_match($regex, $email))
-{ 
+{
 //$password=md5($password); // encrypted password
 $activation=md5($email.time()); // encrypted email+timestamp
 $count=mysqli_query($connection,"SELECT uid FROM users WHERE email='$email'");
@@ -38,13 +38,13 @@ class mailer {
         $mime = new Mail_mime($crlf);
         $mime->setTXTBody('');
         $mime->setHTMLBody($body);
-        
-        if (count($attachment) > 0) { 
+
+        if (count($attachment) > 0) {
             for ($i = 0; $i < count($attachment); $i++) {
                 $mime->addAttachment($attachment[$i], $mime_type[$i]);
             }
         }
-        
+
         $body = $mime->get();
         $headers = array ('From' => $from, 'To' => $to, 'Subject' => $subject);
         $hdrs = $mime->headers($headers);
@@ -53,7 +53,7 @@ class mailer {
         $smtp_params["auth"]     = false;
         $smtp_params["username"] = "1GOVUC\mynutridiari.moh";
         $smtp_params["password"] = "M@kanan.1234";
-        
+
         // Sending the email using smtp
         $mail =& Mail::factory("smtp", $smtp_params);
         $mail->_params = '-f mynutridiari@moh.gov.my' ;
@@ -66,7 +66,7 @@ class mailer {
         }
     }
 }
-		
+
 $mail = new mailer();
 $mail->send_html('mynutridiari@moh.gov.my', $to, $subject, $body);
 
@@ -75,14 +75,14 @@ $status_data = 'SUCCESS';
 }
 else
 {
-$msg= 'The email is already taken, please try new.'; 
+$msg= 'The email is already taken, please try new.';
 $status_data = 'EXIST';
 }
 
 }
 else
 {
-$msg = 'The email you have entered is invalid, please try again.'; 
+$msg = 'The email you have entered is invalid, please try again.';
 $status_data = 'INVALID';
 }
 
@@ -103,4 +103,3 @@ echo json_encode($return_object);
 //echo $msg;
 
 ?>
-

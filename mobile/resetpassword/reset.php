@@ -10,14 +10,14 @@ $email = $_POST['username'];
 $oldpassword = $_POST['oldpassword'];
 $newpassword = $_POST['newpassword'];
 
-	
+
 	$status ='INIT';
 	$ucount = 0;
 
 	$dbhandle = mysql_connect($dbhostname, $dbusername, $dbpassword) 
   		or die("Unable to connect to MySQL");
 
-	$selected = mysql_select_db("mynutridiariv2",$dbhandle) 
+	$selected = mysql_select_db("mynutridiariv2",$dbhandle)
   		or die("Could not select db");
 
 	//execute the SQL query and return records
@@ -26,7 +26,7 @@ $newpassword = $_POST['newpassword'];
 $affected = mysql_affected_rows();
 if($affected > 0) {
    $status = "DONE";
-   
+
    		$to=$email;
 		$subject="Password Changed";
 
@@ -41,13 +41,13 @@ class mailer {
         $mime = new Mail_mime($crlf);
         $mime->setTXTBody('');
         $mime->setHTMLBody($body);
-        
-        if (count($attachment) > 0) { 
+
+        if (count($attachment) > 0) {
             for ($i = 0; $i < count($attachment); $i++) {
                 $mime->addAttachment($attachment[$i], $mime_type[$i]);
             }
         }
-        
+
         $body = $mime->get();
         $headers = array ('From' => $from, 'To' => $to, 'Subject' => $subject);
         $hdrs = $mime->headers($headers);
@@ -56,7 +56,7 @@ class mailer {
         $smtp_params["auth"]     = false;
         $smtp_params["username"] = "1GOVUC\mynutridiari.moh";
         $smtp_params["password"] = "xxxxxxxx";
-        
+
         // Sending the email using smtp
         $mail =& Mail::factory("smtp", $smtp_params);
         $mail->_params = '-f mynutridiari@moh.gov.my' ;
@@ -69,19 +69,19 @@ class mailer {
         }
     }
 }
-		
+
 		$mail = new mailer();
 		$mail->send_html('mynutridiari@moh.gov.my', $to, $subject, $body);
-   
-   
-   
-   
-   
+
+
+
+
+
 } else {
    $status = "FAIL";
 }
 
-	
+
 
 
 $logindate = date('d-m-Y');
